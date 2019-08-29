@@ -1,38 +1,22 @@
 ---
-# tasks file for arillso.openvpn
+- name: install openvpn
+  become: true
+  package:
+    name: "{{ item }}"
+  with_items: "{{ openvpn_packages }}"
 
-- name: add OS specific variables
-  include_vars: "{{ loop_vars }}"
-  with_first_found:
-    - files:
-        - "{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
-        - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
-        - "{{ ansible_distribution }}.yml"
-        - "{{ ansible_os_family }}.yml"
-        - "{{ ansible_system }}.yml"
-        - "defaults.yml"
-      paths:
-        - "vars"
-  loop_control:
-    loop_var: loop_vars
-  tags:
-    - configuration
-    - packages
+- name: Create OpenVPN config file
+  become: true
+  template:
+    src: client.conf.j2
+    dest: "/etc/openvpn/{{ openvpn_name }}.conf"
+    mode: 0640
+  notify: restart openvpn
 
-- name: System | Include
-  include_tasks: "{{ loop_system }}"
-  with_first_found:
-    - files:
-        - "{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
-        - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
-        - "{{ ansible_distribution }}.yml"
-        - "{{ ansible_os_family }}.yml"
-        - "{{ ansible_system }}.yml"
-        - "defaults.yml"
-      paths:
-        - "system"
-  loop_control:
-    loop_var: loop_system
-  tags:
-    - configuration
-    - packages
+- name: Enable OpenVPN autostart.
+  become: true
+  lineinfile:
+    path: /etc/default/openvpn
+    regexp: '^AUTOSTART='
+    line: 'AUTOSTART="{{ openvpn_name }}"'
+  notify: restart openvpn
