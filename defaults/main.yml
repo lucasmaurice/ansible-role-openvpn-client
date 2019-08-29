@@ -1,20 +1,17 @@
 ---
 openvpn_name: openvpn
 
-openvpn_remote: 
-openvpn_port: 
+openvpn_remote: 1.2.3.4  # To change!
+openvpn_port: 1194
 openvpn_proto: udp
 
 openvpn_route: []
-openvpn_client_as_service: false
 openvpn_auth_user_pass: false
-openvpn_client_enabled: false
 
 openvpn_client_cipher: AES-256-CBC
 openvpn_client_ncp_ciphers: AES-256-GCM:AES-128-GCM
 openvpn_client_auth: SHA256
 openvpn_client_remote_cert_tls: server
-
 
 # openvpn_client_compress: lz4-v2
 # openvpn_client_keepalive: "10 60"
