@@ -18,3 +18,13 @@
   notify: restart openvpn
   tags:
     - configuration
+
+- name: Enable OpenVPN autostart.
+  become: true
+  lineinfile:
+    path: /etc/default/openvpn
+    regexp: '^AUTOSTART='
+    line: 'AUTOSTART="{{ openvpn_name }}"'
+  notify: restart openvpn
+  tags:
+    - configuration
