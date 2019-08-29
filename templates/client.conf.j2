@@ -20,7 +20,7 @@ remote-cert-tls {{ openvpn_client_remote_cert_tls }}
 auth-user-pass
 {% endif %}
 
-remote {{ openvpn_remote }} {{ openvpn_remote }} {{ openvpn_remote }}-client
+remote {{ openvpn_remote }} {{ openvpn_port }} {{ openvpn_proto }}-client
 
 {% if openvpn_client_compress is defined %}
 compress {{ openvpn_client_compress }}
