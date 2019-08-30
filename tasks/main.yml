@@ -1,5 +1,5 @@
 ---
-- name: install openvpn
+- name: Install Openvpn
   become: true
   package:
     name: "{{ item }}"
@@ -20,3 +20,10 @@
     regexp: '^AUTOSTART='
     line: 'AUTOSTART="{{ openvpn_name }}"'
   notify: restart openvpn
+
+- name: start openvpn
+  become: true
+  service:
+    name: openvpn
+    state: started
+    enabled: true
