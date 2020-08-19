@@ -13,6 +13,11 @@ openvpn_client_ncp_ciphers: AES-256-GCM:AES-128-GCM
 openvpn_client_auth: SHA256
 openvpn_client_remote_cert_tls: server
 
+openvpn_client_server_cert_type: false
+openvpn_client_nobind: false
+
 # openvpn_client_compress: lz4-v2
 # openvpn_client_keepalive: "10 60"
 # openvpn_client_verify_x509_name:
+
+# openvpn_custom_template: "path/to/template"
