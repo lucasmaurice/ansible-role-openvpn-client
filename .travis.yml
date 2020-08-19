@@ -10,10 +10,11 @@ env:
     - MOLECULE_DISTRO: ubuntu1604
     - MOLECULE_DISTRO: debian9
     - MOLECULE_DISTRO: debian10
+    - MOLECULE_DISTRO: centos8
 
 install:
   # Install test dependencies.
-  - pip install molecule docker testinfra
+  - pip install molecule docker testinfra ansible-lint flake8 yamllint
 
 before_script:
   # Use actual Ansible Galaxy role name for the project directory.

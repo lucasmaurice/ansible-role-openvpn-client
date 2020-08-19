@@ -9,6 +9,15 @@ persist-key
 
 cipher {{ openvpn_client_cipher }}
 ncp-ciphers {{openvpn_client_ncp_ciphers}}
+
+{% if openvpn_client_tls_cipher is defined %}
+--tls-cipher "{{ openvpn_client_tls_cipher }}"
+{% endif %}
+
+{% if openvpn_client_server_cert_type %}
+ns-cert-type server
+{% endif %}
+
 auth {{ openvpn_client_auth }}
 
 tls-client
@@ -16,11 +25,15 @@ client
 resolv-retry infinite
 remote-cert-tls {{ openvpn_client_remote_cert_tls }}
 
+{% if openvpn_client_nobind %}
+nobind
+{% endif %}
+
 {% if openvpn_auth_user_pass %}
 auth-user-pass
 {% endif %}
 
-remote {{ openvpn_remote }} {{ openvpn_port }} {{ openvpn_proto }}-client
+remote {{ openvpn_remote }} {{ openvpn_port }} {{ openvpn_proto }}
 
 {% if openvpn_client_compress is defined %}
 compress {{ openvpn_client_compress }}
